@@ -1,0 +1,25 @@
+{
+  "name": "xmorphus-server",
+  "version": "1.0.0",
+  "description": "node.js xmorphus implementation ",
+  "main": "index.js",
+  "scripts": {
+    "serve": "npm install && npx gulp serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ploissken/xmorphus-server.git"
+  },
+  "author": "Rodrigo Souza",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ploissken/xmorphus-server/issues"
+  },
+  "homepage": "https://github.com/ploissken/xmorphus-server#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "gulp": "^4.0.2",
+    "gulp-nodemon": "^2.4.2"
+  }
+}

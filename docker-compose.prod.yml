@@ -1,0 +1,8 @@
+#to deploy in prod env:
+#docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+version: "3"
+
+services:
+  xmorphus_server:
+    labels:
+      - "traefik.frontend.rule=Host:xm.txto.com.br"
