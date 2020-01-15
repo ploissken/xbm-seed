@@ -21,12 +21,11 @@ services:
     labels:
       - "traefik.backend=xmorphus_server"
       - "traefik.docker.network=traefik"
-      - "traefik.frontend.rule=Host:xm.localhost"
       - "traefik.enable=true"
-      - "traefik.port=9000"
+      - "traefik.port=9090"
     environment:
       HOST: 0.0.0.0
-      PORT: 9000
+      PORT: 9090
 
   # moongo:
   #   image: mongo

@@ -1,7 +1,7 @@
-console.log('[server] public-audio starting')
+console.log('[server] xmorphus starting')
 
 // setup environment variables
-// require('dotenv').config()
+require('dotenv').config()
 
 const PORT = process.env.PORT || 9000
 const MODE = process.env.NODE_ENV || 'development'

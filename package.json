@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ploissken/xmorphus-server#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-nodemon": "^2.4.2"
