@@ -4,7 +4,7 @@ const PORT = process.env.PORT || 9000
 const MODE = process.env.NODE_ENV || 'development'
 const express = require('express')
 const app = express()
-// const db = require('database')
+const db = require('../database')
 const log = require('./logger')(app)
 // const bodyParser = require('body-parser')
 // const cors = require('cors')
@@ -24,8 +24,8 @@ const log = require('./logger')(app)
 // log.info('[server] posterest served')
 
 // setup db
-// log.info('[database] starting')
-// db.init(log).then(() => {
+log.info('[database] starting')
+db.init(log).then(() => {}).catch(e => console.log(e))
 //   // setup login and signup
 //   let passport = require('signin')(app, log, db)
 //

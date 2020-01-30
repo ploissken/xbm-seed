@@ -10,8 +10,8 @@ services:
   xmorphus_server:
     image: node:carbon
     command: bash -c "npm install && npx gulp serve"
-    # depends_on:
-    #   - moongo
+    depends_on:
+      - moongo
     working_dir: "/home/node"
     volumes:
       - './:/home/node/:cached'
@@ -27,19 +27,19 @@ services:
       HOST: 0.0.0.0
       PORT: 9090
 
-  # moongo:
-  #   image: mongo
-  #   restart: always
-  #   command: mongod --port 5442
-  #   environment:
-  #     MONGO_DATA_DIR: /data/db
-  #   networks:
-  #     - internal
-  #   labels:
-  #     - "traefik.enable=false" # wont display at http://traefik.localhost
-  #     - "traefik.backend=moongo"
-  #     - "traefik.docker.network=internal"
-  #     - "traefik.port=5442"
-  #   # persists outside of docker
-  #   volumes:
-  #     - ./data/db:/data/db
+  moongo:
+    image: mongo
+    restart: always
+    command: mongod --port 5442
+    environment:
+      MONGO_DATA_DIR: /data/db
+    networks:
+      - internal
+    labels:
+      - "traefik.enable=false"
+      - "traefik.backend=moongo"
+      - "traefik.docker.network=internal"
+      - "traefik.port=5442"
+    # persists outside of docker
+    volumes:
+      - ./data/db:/data/db
