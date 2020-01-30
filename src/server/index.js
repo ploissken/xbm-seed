@@ -25,9 +25,11 @@ const log = require('./logger')(app)
 
 // setup db
 log.info('[database] starting')
-db.init(log).then(() => {}).catch(e => console.log(e))
-//   // setup login and signup
-//   let passport = require('signin')(app, log, db)
+db.init(log).then(() => {
+    // setup login and signup
+    let passport = require('../authentication')(app, log, db)  
+}).catch(e => console.log(e))
+
 //
 //   // setup routes
 //   log.info('[routes] starting')

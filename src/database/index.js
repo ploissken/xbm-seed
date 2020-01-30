@@ -37,17 +37,18 @@ db.init = async function (log) {
 //   'caption': String
 // })
 //
-// db.User = mongoose.model('User', {
-//   'username': { type: String, unique: true, dropDups: true },
-//   'password': String,
-//   'created': Date,
-//   'google_id': { type: String, unique: true, dropDups: true, required: false },
-//   'fb_id': { type: String, unique: true, dropDups: true, required: false },
-//   'token': String,
-//   'refresh': String,
-//   'social_name': String,
-//   'gmail': { type: String, unique: true, dropDups: true, required: false }
-// })
+db.User = mongoose.model('User', {
+  'username': { type: String, unique: true, dropDups: true },
+  'password': String,
+  'created': Date,
+  'avatar_path' : String
+  // 'google_id': { type: String, unique: true, dropDups: true, required: false },
+  // 'fb_id': { type: String, unique: true, dropDups: true, required: false },
+  // 'token': String,
+  // 'refresh': String,
+  // 'social_name': String,
+  // 'gmail': { type: String, unique: true, dropDups: true, required: false }
+})
 //
 // db.Prefs = mongoose.model('Prefs', {
 //   'uid': String,

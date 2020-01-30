@@ -64,9 +64,9 @@ module.exports = function (app) {
     level: 'debug'
   }))
 
-  console.log(`${c.cyan}   ${'┌─┐┌─┐┬─┐'}${c.green}${'┬  ┬'}${c.cyan}${'┌─┐┬─┐'}   ${'┌─┐┌┬┐┌─┐┬─┐┌┬┐┬┌┐┌┌─┐'} ${c.clear}`)
-  console.log(`${c.cyan}   ${'└─┐├┤ ├┬┘'}${c.green}${'└┐┌┘'}${c.cyan}${'├┤ ├┬┘'}   ${'└─┐ │ ├─┤├┬┘ │ │││││ ┬'} ${c.clear}`)
-  console.log(`${c.cyan}   ${'└─┘└─┘┴└─'}${c.green}${' └┘ '}${c.cyan}${'└─┘┴└─'}   ${'└─┘ ┴ ┴ ┴┴└─ ┴ ┴┘└┘└─┘'} ${c.clear}`)
+  console.log(`${c.magenta}   ${'┌─┐┌─┐┬─┐'}${c.magenta}${'┬  ┬'}${c.magenta}${'┌─┐┬─┐'}   ${'┌─┐┌┬┐┌─┐┬─┐┌┬┐┬┌┐┌┌─┐'} ${c.clear}`)
+  console.log(`${c.cyan}   ${'└─┐├┤ ├┬┘'}${c.cyan}${'└┐┌┘'}${c.cyan}${'├┤ ├┬┘'}   ${'└─┐ │ ├─┤├┬┘ │ │││││ ┬'} ${c.clear}`)
+  console.log(`${c.magenta}   ${'└─┘└─┘┴└─'}${c.magenta}${' └┘ '}${c.magenta}${'└─┘┴└─'}   ${'└─┘ ┴ ┴ ┴┴└─ ┴ ┴┘└┘└─┘'} ${c.clear}`)
 
   logger.info('[logger] (' + currTime + ') module up and running')
 
