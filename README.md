@@ -15,11 +15,11 @@ npm run build
 ```
 
 ## Back-end file structure
-  src/
-  ├── authentication   # local authentication with passport.js
-  ├── database         # db connection and model definition
-  ├── server           # server configuration and routes handling
-  └── tools            # server helper tools
+    src
+    ├── authentication   # local authentication with passport.js
+    ├── database         # db connection and model definition
+    ├── server           # server configuration and routes handling
+    └── tools            # server helper tools
 
 ## Project Setup with Docker env
 For properly building the environment, [Docker](https://www.docker.com/) and Docker-compose are mandatory. For `Windows 10 Home`, check [Windows Hyper-V limitations](https://forums.docker.com/t/installing-docker-on-windows-10-home/11722).
