@@ -26,7 +26,7 @@ For properly building the environment, [Docker](https://www.docker.com/) and Doc
 
 [Traefik](https://github.com/ploissken/traefik) container is also mandatory, for binding frontend, backend & database and generating SSL certifications. It must be started prior to the Lunch King backend and frontend.
 
-With all these requirements are met, start the server with docker-compose:
+With all these requirements met, start the server with docker-compose:
 
 #### Building for development
 ```
