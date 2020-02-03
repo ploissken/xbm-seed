@@ -16,51 +16,18 @@ db.init = async function (log) {
     })
   })
 }
-//
-// db.News = mongoose.model('News', {
-//   'href': { type: String, unique: true, dropDups: true },
-//   'title': String,
-//   'time': Date,
-//   'ranking': { type: Array, 'default': [] },
-//   'img': String
-// })
-//
-// db.Insta = mongoose.model('Instagram', {
-//   'user_info': { profile_pic: String, user_name: String },
-//   'url': String,
-//   'comments': Number,
-//   'likes': Number,
-//   'img': String,
-//   'uid': { type: String, unique: true, dropDups: true },
-//   'time': Date,
-//   'ranking': { type: Array, 'default': [] },
-//   'caption': String
-// })
-//
+
+db.Vote = mongoose.model('Vote', {
+  'voter_id': String,
+  'candidate_id': String,
+  'created': Date
+})
+
 db.User = mongoose.model('User', {
   'username': { type: String, unique: true, dropDups: true },
   'password': String,
   'created': Date,
   'avatar_path' : String
-  // 'google_id': { type: String, unique: true, dropDups: true, required: false },
-  // 'fb_id': { type: String, unique: true, dropDups: true, required: false },
-  // 'token': String,
-  // 'refresh': String,
-  // 'social_name': String,
-  // 'gmail': { type: String, unique: true, dropDups: true, required: false }
 })
-//
-// db.Prefs = mongoose.model('Prefs', {
-//   'uid': String,
-//   'darkmode': Boolean,
-//   'listview': Boolean,
-//   'minimal': Boolean,
-//   'filterSources': { type: Array, 'default': [] }
-// })
-//
-// db.Favorite = mongoose.model('Fav', {
-//   'uid': String,
-//   'nid': String
-// })
 
 module.exports = db

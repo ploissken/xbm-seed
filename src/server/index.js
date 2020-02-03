@@ -31,10 +31,6 @@ app.use(
 
 app.use(cors(corsConf))
 
-// serve posterest as static html
-// app.use(express.static('public'))
-// log.info('[server] posterest served')
-
 // setup db
 log.info('[database] starting')
 db.init(log).then(() => {
@@ -49,13 +45,12 @@ db.init(log).then(() => {
 //   // setup cron
 //   require('cronos')(db, log)
 
-
   // setup weblistener
   app.listen(PORT, () => {
     console.log(`\x1b[1m\x1b[32m[server] listening (${MODE} mode) on port ${PORT}\x1b[0m`)
     log.info(`\x1b[1m\x1b[32m[server] listening (${MODE} mode) on port ${PORT}\x1b[0m`)
   })
-// })
 }).catch(e => console.log(e))
+
 // export app for eventually do tests
 module.exports = app

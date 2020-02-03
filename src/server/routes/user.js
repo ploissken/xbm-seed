@@ -64,13 +64,5 @@ module.exports = function (app, db, log, passport) {
       req.logout()
       return res.status(200).json({ message: 'you were not even logged' })
     }
-
   })
-
-  // 404
-  app.get('*', function (req, res) {
-    console.log('404')
-    res.status(404).json({ status: 'failure', message: 'not found'})
-  })
-
 }
