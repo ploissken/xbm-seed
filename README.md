@@ -1,2 +1,39 @@
-# xmorphus-server
-xmorphus™ methodology applied with node.js &amp; postgres
+# Lunch King - Back-end
+A [Node.js](https://nodejs.org/en/) server with a [Mongo](https://www.mongodb.com/) database, for daily elections of THE LUNCH KING.
+
+## Project Setup in default env
+You need [Node.js](https://nodejs.org/en/) installed for running these instructions.
+
+#### Build and start for development
+```
+npm install && npm run serve
+```
+
+#### Compiles and minifies for production
+```
+npm run build
+```
+
+## Back-end file structure
+  src/
+  ├── authentication   # local authentication with passport.js
+  ├── database         # db connection and model definition
+  ├── server           # server configuration and routes handling
+  └── tools            # server helper tools
+
+## Project Setup with Docker env
+For properly building the environment, [Docker](https://www.docker.com/) and Docker-compose are mandatory. For `Windows 10 Home`, check [Windows Hyper-V limitations](https://forums.docker.com/t/installing-docker-on-windows-10-home/11722).
+
+[Traefik](https://github.com/ploissken/traefik) container is also mandatory, for binding frontend, backend & database and generating SSL certifications. It must be started prior to the Lunch King backend and frontend.
+
+With all these requirements are met, start the server with docker-compose:
+
+#### Building for development
+```
+docker-compose up
+```
+
+#### Building for production
+```
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up
+```
