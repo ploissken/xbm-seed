@@ -9,4 +9,6 @@ module.exports = function (app, db, log, passport) {
     res.status(404).json({ status: 'failure', message: 'not found'})
   })
 
+  log.info('[routes] setup complete')
+
 }

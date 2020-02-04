@@ -1,15 +1,14 @@
-// gear up
 const session = require('express-session')
 const passport = require('passport')
 const flash = require('connect-flash')
-// const config = require('config')
+const config = require('../config')
 
 module.exports = function (app, logger, db) {
   logger.info('[authentication] module starting')
 
   // https://github.com/expressjs/session#options
   app.use(session({
-    secret: 'here-goes-THE-secret-that-keeps-a-cookie-unique--important-stuff',
+    secret: config.cookie.secret,
     resave: false,
     saveUninitialized: false
   }))
@@ -18,8 +17,6 @@ module.exports = function (app, logger, db) {
   app.use(passport.initialize())
   app.use(passport.session())
   require('./local-strategy')(passport, logger, db)
-  // require('./google-strategy')(passport, logger, db, config)
-  // require('./fb-strategy')(passport, logger, db, config)
 
   logger.info('[authentication] module up and running')
 

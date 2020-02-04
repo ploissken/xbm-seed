@@ -1,5 +1,34 @@
 const bcrypt = require('bcryptjs')
-var LocalStrategy = require('passport-local').Strategy
+const LocalStrategy = require('passport-local').Strategy
+
+const createUser = function (db, log, newUser) {
+  return new Promise(async function (resolve, reject) {
+    log.info(`[user-creation] user-creation started`)
+    try {
+      let user = {
+        username: newUser.username,
+        password: '',
+        created: new Date(),
+        avatar_path: ''
+      }
+      user.password = bcrypt.hashSync(newUser.password + user.created.toString(), bcrypt.genSaltSync(8), null)
+
+      // persist the new user
+      db.User.create(user).then(usr => {
+        log.info(`[user-creation] creation success: new user id ${usr._id}`)
+        resolve(usr)
+      }).catch(e => {
+        log.error(`[user-creation] db.User.create error`)
+        log.error(`[user-creation] ${e}`)
+        reject(e)
+      })
+
+    } catch (e) {
+      log.error(`[user-creation] ${e}`)
+      reject(e)
+    }
+  })
+}
 
 module.exports = function (passport, log, db) {
   passport.serializeUser(function (user, done) {
@@ -22,16 +51,17 @@ module.exports = function (passport, log, db) {
     log.info('[local-login] process started')
 
     db.User.findOne({ username: username }).then((usr) => {
+      // handling login failures
       if (!usr) {
         log.info('[local-login] local login: unknown username')
         return done(null, false, { 'message': 'unknown username' })
       }
-
       if (!bcrypt.compareSync(password + usr.created.toString(), usr.password)) {
         log.info('[local-login] local login: wrong password')
         return done(null, false, { 'message': 'wrong password' })
       }
 
+      // login succeed
       log.info('[local-login] local login: success')
       log.info(`[local-login] ${usr._id} logged in`)
       return done(null, usr)
@@ -40,8 +70,7 @@ module.exports = function (passport, log, db) {
       log.error(err)
       throw err
     })
-  }
-  ))
+  }))
 
   passport.use('local-signup', new LocalStrategy({
     passReqToCallback: true
@@ -60,16 +89,15 @@ module.exports = function (passport, log, db) {
       if (!usr) {
         log.info('[local-signup] creating new user')
         try {
-          let wizard = require('./user-creation')
           let newUser = {
             username: username,
             password: pwd
           }
-          wizard.createUser(db, log, newUser).then(usr => {
+          createUser(db, log, newUser).then(usr => {
             log.info(`[local-signup] user created ${usr.username} successfully ${usr._id}`)
             return done(null, usr)
           }).catch(err => {
-            log.error('[local-signup] wizard could not summon an user')
+            log.error('[local-signup] could not create an user')
             log.error(err)
           })
         } catch (e) {
