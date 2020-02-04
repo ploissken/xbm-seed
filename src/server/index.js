@@ -31,7 +31,7 @@ db.init(log).then(() => {
 //   require('cronos')(db, log)
 
   // setup weblistener
-  app.listen(PORT, () => {
+  app.listen(config.PORT, () => {
     log.info(`\x1b[1m\x1b[32m[server] listening (${config.MODE} mode) on port ${config.PORT}\x1b[0m`)
   })
 }).catch(e => console.log(e))
