@@ -6,6 +6,7 @@ const API = process.env.NODE_ENV === 'production'
   : 'http://localhost'
 
   const ALLOWED_ORIGINS = [
+    'http://localhost:8081/',
     'http://localhost/',
     'http://localhost',
     'http://localhost:3000/',
