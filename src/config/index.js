@@ -15,7 +15,7 @@ const API = process.env.NODE_ENV === 'production'
     'http://lunch.localhost/',
     'http://lunch.localhost',
     'http://lunch.txto.com.br/',
-    'http://lunch.txto.com.br'
+    'http://lunch.txto.com.br',
     'https://lunch.txto.com.br/',
     'https://lunch.txto.com.br'
   ]
