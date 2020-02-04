@@ -22,7 +22,7 @@ const API = process.env.NODE_ENV === 'production'
   }
 
   const config = {
-  API,
+  API, PORT, MODE,
   corsConf,
   cookie: {
     secret: 'here-goes-THE-secret-that-keeps-a-cookie-unique--important-stuff'
