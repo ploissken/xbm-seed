@@ -9,7 +9,7 @@ module.exports = function (app, logger, db) {
   // https://github.com/expressjs/session#options
   app.use(session({
     secret: config.cookie.secret,
-    resave: false,
+    resave: true,
     saveUninitialized: false
   }))
 

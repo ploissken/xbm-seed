@@ -1,3 +1,17 @@
+const multer = require('multer')
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/avatar/')
+  },
+  filename: function (req, file, cb) {
+    console.log(`filename filnemae`, file)
+    cb(null, Date.now() + '.jpg')
+  }
+})
+
+var upload = multer({ storage: storage })
+// const upload = multer({ dest: 'public/avatar/', preservePath: true })
+
 module.exports = function (app, db, log, passport) {
 
   // perform login
@@ -52,6 +66,42 @@ module.exports = function (app, db, log, passport) {
       log.info(`[profile] request without authentication`)
       return res.status(403).json({ message: 'you are not logged in' })
     }
+  })
+
+
+  // update avatar picture
+  app.post('/update-avatar', upload.single('file'), function (req, res, next) {
+    const usr = JSON.parse(req.body.user)
+    console.log(usr)
+    console.log(usr._id)
+    console.log(req.file.path + '.jpg')
+    db.User.updateOne({ _id: usr._id }, { avatar_path: 'avatar/' + req.file.filename}).then(resu => {
+      console.log('updateOne')
+      console.log(resu)
+      return res.json({ ...usr, avatar_path: 'avatar/' + req.file.filename })
+    }).catch(err => {
+      console.log('err')
+      console.log(err)
+    })
+  })
+
+  // update profile information
+  app.post('/update', (req, res) => {
+    // const usr = JSON.parse(req.body.user)
+    // console.log(usr)
+    const updtUser = { ...req.body }
+    console.log(updtUser._id)
+    // res.json({ 'message': 'ok' })
+    // console.log(usr._id)
+    // console.log(req.file.path + '.jpg')
+    db.User.updateOne({ _id: updtUser._id }, { ...updtUser }).then(resu => {
+      console.log('updateOne')
+      console.log(resu)
+      return res.json({ ...updtUser })
+    }).catch(err => {
+      console.log('err')
+      console.log(err)
+    })
   })
 
   app.get('/logout', (req, res) => {

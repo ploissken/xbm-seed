@@ -17,6 +17,8 @@ app.use(
 
 app.use(cors(config.corsConf))
 
+app.use(express.static('public'))
+
 // setup db
 log.info('[database] starting')
 db.init(log).then(() => {
@@ -31,7 +33,7 @@ db.init(log).then(() => {
 //   require('cronos')(db, log)
 
   // setup weblistener
-  app.listen(PORT, () => {
+  app.listen(config.PORT, () => {
     log.info(`\x1b[1m\x1b[32m[server] listening (${config.MODE} mode) on port ${config.PORT}\x1b[0m`)
   })
 }).catch(e => console.log(e))

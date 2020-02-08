@@ -26,6 +26,7 @@ db.Vote = mongoose.model('Vote', {
 db.User = mongoose.model('User', {
   'username': { type: String, unique: true, dropDups: true },
   'password': String,
+  'name': String,
   'created': Date,
   'avatar_path' : String
 })

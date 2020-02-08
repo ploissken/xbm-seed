@@ -7,6 +7,7 @@ const createUser = function (db, log, newUser) {
     try {
       let user = {
         username: newUser.username,
+        name: newUser.name,
         password: '',
         created: new Date(),
         avatar_path: ''
