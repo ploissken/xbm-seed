@@ -29,7 +29,8 @@ module.exports = function (app, db, log, passport) {
       if (info) {
         log.info(`[local-login] something went wrong`)
         log.info(`[local-login] ${JSON.stringify(info)}`)
-        return res.status(403).send(info)
+        console.log(info)
+        return res.status(403).json(JSON.stringify(info))
       }
     })(req, res, next)
   })
@@ -72,16 +73,11 @@ module.exports = function (app, db, log, passport) {
   // update avatar picture
   app.post('/update-avatar', upload.single('file'), function (req, res, next) {
     const usr = JSON.parse(req.body.user)
-    console.log(usr)
-    console.log(usr._id)
-    console.log(req.file.path + '.jpg')
     db.User.updateOne({ _id: usr._id }, { avatar_path: 'avatar/' + req.file.filename}).then(resu => {
-      console.log('updateOne')
-      console.log(resu)
       return res.json({ ...usr, avatar_path: 'avatar/' + req.file.filename })
     }).catch(err => {
-      console.log('err')
-      console.log(err)
+      log.error(err.message)
+      return res.status(500).json({ message: `Error: ${err.message}` })
     })
   })
 
