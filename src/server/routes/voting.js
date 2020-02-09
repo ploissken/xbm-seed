@@ -29,6 +29,8 @@ module.exports = function (app, db, log, passport) {
   })
 
   app.get('/get-winner', (req, res) => {
+    let mail = require('../mailgun')(log)
+    mail.sendMail('req.body')
     // get all candidates
     db.User.find().then(users => {
       // get votes from last 6 months
