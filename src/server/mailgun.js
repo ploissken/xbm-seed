@@ -26,7 +26,6 @@ module.exports = function (logger) {
 	  	} else {
 	  		logger.info('[mailgun] no errors, mail possibly sent (:')
 	  	}
-	  	console.log(error)
 		})
 	}
 

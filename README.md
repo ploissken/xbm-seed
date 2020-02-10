@@ -15,11 +15,13 @@ npm run build
 ```
 
 ## Back-end file structure
+    public/avatar/       # stores user image uploads
     src
+    ├── config           # server configurations
     ├── authentication   # local authentication with passport.js
-    ├── database         # db connection and model definition
-    ├── server           # server configuration and routes handling
-    └── tools            # server helper tools
+    ├── database         # db connection and models definition
+    ├── server           # server setup and routes handling
+    └── tools            # votes counting tool
 
 ## Project Setup with Docker env
 For properly building the environment, [Docker](https://www.docker.com/) and Docker-compose are mandatory. For `Windows 10 Home`, check [Windows Hyper-V limitations](https://forums.docker.com/t/installing-docker-on-windows-10-home/11722).
