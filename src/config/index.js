@@ -19,9 +19,15 @@ const API = process.env.NODE_ENV === 'production'
     origin: ALLOWED_ORIGINS
   }
 
+  const mailgunConf = {
+    API_KEY: '0ad23bd3a8e9ac1f9bd6f9a1d084ab86-3b1f59cf-5423fff5',
+    DOMAIN: 'txto.com.br'
+  }
+
   const config = {
     API, PORT, MODE,
     corsConf,
+    mailgunConf,
     cookie: {
       secret: 'here-goes-THE-secret-that-keeps-a-cookie-unique--important-stuff'
     }
