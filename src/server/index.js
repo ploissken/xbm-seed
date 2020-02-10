@@ -29,8 +29,8 @@ db.init(log).then(() => {
   log.info('[routes] starting')
   require('./routes')(app, db, log, passport)
 
-//   // setup cron
-//   require('cronos')(db, log)
+  // setup cron
+  require('./cronos')(db, log)
 
   // setup weblistener
   app.listen(config.PORT, () => {

@@ -8,11 +8,11 @@ module.exports = function (logger) {
 	logger.info('[mailgun] sendmail process started')
 	let postOffice = {}
 
-	postOffice.sendMail = function (content) {
+	postOffice.sendMail = function (detination) {
 
 		var data = {
-		  from: 'REI DO ALMOçO <rodrigo@txto.com.br>',
-		  to: 'ploissken@gmail.com', // TODO: get this as parameter
+		  from: 'REI DO ALMOÇO <rodrigo@txto.com.br>',
+		  to: detination,
 		  subject: '👑 Parabéns, rei do Almoço!',
 	      text: 'Você foi eleito rei do almoço hoje. Bom trabalho!',
 	      html: 'Você foi eleito rei do almoço hoje. Bom trabalho!'
