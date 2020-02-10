@@ -49,7 +49,7 @@ module.exports = function (app, db, log, passport) {
       if (info) {
         log.info(`[local-signup] something went wrong`)
         log.info(`[local-signup] ${JSON.stringify(info)}`)
-        return res.status(403).json(info)
+        return res.status(403).json(JSON.stringify(info))
       }
     })(req, res, next)
   })
@@ -60,7 +60,7 @@ module.exports = function (app, db, log, passport) {
     if (req.body.user) {
       log.info(`[profile] user id ${req.body.user._id}`)
       db.User.findOne({ _id: req.body.user._id }).then(usr => {
-        return res.status(200).json(usr)
+        return res.status(200).json(JSON.stringify(usr))
       })
     } else {
       log.info(`[profile] request without authentication`)

@@ -55,14 +55,16 @@ module.exports = {
         const winners = candidateResult.filter(c => c.votes === candidateResult[0].votes)
         const loosers = candidateResult.reverse().filter(c => c.votes === candidateResult[0].votes)
         result[weekNumber][weekDay] = { winners: winners, loosers: loosers }
-        weekWinners = [ ...weekWinners, ...winners ]
+        weekWinners = [ ...weekWinners, ...winners.map(w => { return { ...w, day: votationDate }}) ]
       })
 
       totalPerWeek[weekNumber] = Object.keys(weekTotals).map(e => {
 
         return {
           _id: e,
-          kingOfDay: weekWinners.filter(w => w._id + '' === e + '').length,
+          kingOfDay: weekWinners.filter(w => w._id + '' === e + '')
+            .map(w => { return { day: w.day, votes: w.votes } })
+            .sort((a, b) => new Date(a.day) - new Date(b.day)),
           weekVotes: weekTotals[e]
         }
       }).sort((a, b) => b.weekVotes - a.weekVotes)

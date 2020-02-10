@@ -83,7 +83,7 @@ module.exports = function (passport, log, db) {
       // username already registered
       if (usr) {
         log.info(`[local-signup] local signup: username ${username} already in use`)
-        return done(null, false, { 'message': 'username already registered' })
+        return done(null, false, { 'message': 'email already registered' })
       }
 
       // username not taken. create new user
