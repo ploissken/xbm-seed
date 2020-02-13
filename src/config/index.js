@@ -6,6 +6,7 @@ const API = process.env.NODE_ENV === 'production'
   : 'http://xm.localhost'
 
   const ALLOWED_ORIGINS = [
+    'http://localhost:8080/',
     'http://lunch.localhost/',
     'http://lunch.localhost',
     'http://lunch.txto.com.br/',
