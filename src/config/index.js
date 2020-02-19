@@ -22,7 +22,7 @@ const API = process.env.NODE_ENV === 'production'
   }
 
   const mailgunConf = {
-    API_KEY: '0ad23bd3a8e9ac1f9bd6f9a1d084ab86-3b1f59cf-5423fff5',
+    API_KEY: 'key-a93feda686130e147a070d02a2ba2cc6',
     DOMAIN: 'txto.com.br'
   }
 
