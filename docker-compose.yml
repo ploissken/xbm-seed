@@ -28,7 +28,7 @@ services:
       HOST: 0.0.0.0
       PORT: 9090
       # when using postgres, repeat container credentials here
-      # POSTGRES_USER: jessepinkman
+      # POSTGRES_USER: xmo-user
       # POSTGRES_PASSWORD: methereum
       # POSTGRES_DB: xmo-db
 
@@ -54,8 +54,8 @@ services:
     image: postgres:10.2-alpine
     restart: always
     environment:
-      POSTGRES_USER: jessepinkman
-      POSTGRES_PASSWORD: methereum
+      POSTGRES_USER: xmo-user
+      POSTGRES_PASSWORD: xmo-1337_##-pass
       POSTGRES_DB: xmo-db
     ports:
       - "5432:5432"
