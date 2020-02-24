@@ -9,11 +9,7 @@ const API = process.env.NODE_ENV === 'production'
     'http://localhost:8080/',
     'http://localhost:8080',
     'http://lunch.localhost/',
-    'http://lunch.localhost',
-    'http://lunch.txto.com.br/',
-    'http://lunch.txto.com.br',
-    'https://lunch.txto.com.br/',
-    'https://lunch.txto.com.br'
+    'http://lunch.localhost'
   ]
 
   const corsConf = {
@@ -22,7 +18,7 @@ const API = process.env.NODE_ENV === 'production'
   }
 
   const mailgunConf = {
-    API_KEY: 'key-a93feda686130e147a070d02a2ba2cc6',
+    API_KEY: 'SECRET-MAILGUN-API-KEY',
     DOMAIN: 'txto.com.br'
   }
 

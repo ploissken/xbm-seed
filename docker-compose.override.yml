@@ -1,6 +1,6 @@
 version: "3"
 
 services:
-  xmorphus_server:
+  xmorphus:
     labels:
-      - "traefik.frontend.rule=Host:xm.localhost"
+      - "traefik.frontend.rule=Host:xmo.localhost"

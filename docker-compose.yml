@@ -3,43 +3,61 @@ version: "3"
 networks:
   traefik:
     external: true
-  internal:
-    external: false
+  # internal:
+    # external: false
 
 services:
-  xmorphus_server:
+  xmorphus:
     image: node:carbon
     command: bash -c "npm install && npx gulp serve"
-    depends_on:
-      - moongo
+    # depends_on:
+      # - xmo-mongo
+      # - xmo-postgres
     working_dir: "/home/node"
     volumes:
       - './:/home/node/:cached'
     networks:
       - traefik
-      - internal
+      # - internal
     labels:
-      - "traefik.backend=xmorphus_server"
+      - "traefik.backend=xmorphus"
       - "traefik.docker.network=traefik"
       - "traefik.enable=true"
       - "traefik.port=9090"
     environment:
       HOST: 0.0.0.0
       PORT: 9090
+      # when using postgres, repeat container credentials here
+      # POSTGRES_USER: jessepinkman
+      # POSTGRES_PASSWORD: methereum
+      # POSTGRES_DB: xmo-db
 
-  moongo:
-    image: mongo
+  # xmo-mongo:
+  #   image: mongo
+  #   restart: always
+  #   command: mongod --port 5442
+  #   environment:
+  #     MONGO_DATA_DIR: /data/db
+  #   networks:
+  #     - internal
+  #     - traefik # allow external access
+  #   labels:
+  #     - "traefik.enable=false"
+  #     - "traefik.backend=xmo-mongo"
+  #     - "traefik.docker.network=internal"
+  #     - "traefik.port=5442"
+  #   # persists outside of docker
+  #   volumes:
+  #     - ./data/db:/data/db
+
+  xmo-postgres:
+    image: postgres:10.2-alpine
     restart: always
-    command: mongod --port 5442
     environment:
-      MONGO_DATA_DIR: /data/db
-    networks:
-      - internal
-    labels:
-      - "traefik.enable=false"
-      - "traefik.backend=moongo"
-      - "traefik.docker.network=internal"
-      - "traefik.port=5442"
-    # persists outside of docker
+      POSTGRES_USER: jessepinkman
+      POSTGRES_PASSWORD: methereum
+      POSTGRES_DB: xmo-db
+    ports:
+      - "5432:5432"
     volumes:
-      - ./data/db:/data/db
+      - ./data/db:/var/lib/postgresql/data/
