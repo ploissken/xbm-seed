@@ -15,6 +15,18 @@ module.exports = function (app, log, db) {
     })
   })
 
+  app.get('/tables', (req, res) => {
+    const selectTableNames = `SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema = 'public'`
+    console.log('/tables', selectTableNames)
+    db.query(selectTableNames).then(response => {
+      console.log(`then`)
+      res.json(response.rows)
+    }).catch(err => {
+      console.log(`catch`)
+      res.json({status: 'error', message: err.message})
+    })
+  })
+
   // 404
   app.get('*', function (req, res) {
     console.log('404')

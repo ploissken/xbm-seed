@@ -6,10 +6,8 @@ const API = process.env.NODE_ENV === 'production'
   : 'http://xm.localhost'
 
   const ALLOWED_ORIGINS = [
-    'http://localhost:8080/',
-    'http://localhost:8080',
-    'http://lunch.localhost/',
-    'http://lunch.localhost'
+    'https://xmofe.txto.com.br',
+    'http://xmofe.localhost'
   ]
 
   const corsConf = {
