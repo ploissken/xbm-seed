@@ -51,7 +51,7 @@ services:
   #     - ./data/db:/data/db
 
   xmo-postgres:
-    image: postgres:12.3
+    image: postgres:10.2-alpine
     restart: always
     environment:
       POSTGRES_USER: xmo-user
