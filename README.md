@@ -1,5 +1,9 @@
-# Lunch King - Back-end
-A [Node.js](https://nodejs.org/en/) server with a [Mongo](https://www.mongodb.com/) database, for daily elections of THE LUNCH KING.
+─┐ ┬┌┐ ┌┬┐   ┌┐┌┌─┐┌┬┐┌─┐  ┌─┐┌─┐┌─┐┌┬┐
+┌┴┬┘├┴┐│││───││││ │ ││├┤───└─┐├┤ ├┤  ││
+┴ └─└─┘┴ ┴   ┘└┘└─┘─┴┘└─┘  └─┘└─┘└─┘─┴┘
+
+A [Node.js](https://nodejs.org/en/) starter for
+xbmorphus-like JS servers.
 
 ## Project Setup in default env
 You need [Node.js](https://nodejs.org/en/) installed for running these instructions.
