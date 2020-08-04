@@ -3,22 +3,16 @@ version: "3"
 networks:
   traefik:
     external: true
-  # internal:
-    # external: false
 
 services:
   xmorphus:
-    image: node:14.7.0-alpine3.10
+    image: node:12-slim
     command: bash -c "npm install && npx gulp serve"
-    # depends_on:
-      # - xmo-mongo
-      # - xmo-postgres
     working_dir: "/home/node"
     volumes:
       - './:/home/node/:cached'
     networks:
       - traefik
-      # - internal
     labels:
       - "traefik.backend=xmorphus"
       - "traefik.docker.network=traefik"
@@ -27,37 +21,3 @@ services:
     environment:
       HOST: 0.0.0.0
       PORT: 9090
-      # when using postgres, repeat container credentials here
-      # POSTGRES_USER: xmo-user
-      # POSTGRES_PASSWORD: methereum
-      # POSTGRES_DB: xmo-db
-
-  # xmo-mongo:
-  #   image: mongo
-  #   restart: always
-  #   command: mongod --port 5442
-  #   environment:
-  #     MONGO_DATA_DIR: /data/db
-  #   networks:
-  #     - internal
-  #     - traefik # allow external access
-  #   labels:
-  #     - "traefik.enable=false"
-  #     - "traefik.backend=xmo-mongo"
-  #     - "traefik.docker.network=internal"
-  #     - "traefik.port=5442"
-  #   # persists outside of docker
-  #   volumes:
-  #     - ./data/db:/data/db
-
-  xmo-postgres:
-    image: postgres:10.13
-    restart: always
-    environment:
-      POSTGRES_USER: xmo-user
-      POSTGRES_PASSWORD: xmo-1337_##-pass
-      POSTGRES_DB: xmo-db
-    ports:
-      - "5432:5432"
-    volumes:
-      - ./data/db:/var/lib/postgresql/data/
