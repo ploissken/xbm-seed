@@ -7,7 +7,8 @@ const API = process.env.NODE_ENV === 'production'
 
   const ALLOWED_ORIGINS = [
     'https://xmofe.txto.com.br',
-    'http://xmofe.localhost'
+    'http://xmofe.localhost',
+    'http://localhost'
   ]
 
   const corsConf = {
