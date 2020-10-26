@@ -10,7 +10,7 @@ var db = {}
 module.exports = (logger) => {
   logger.info('[database] module starting')
 
-  var sequelize = new Sequelize('postgres://xmo-user:xmo-1337_##-pass@txto.com.br:5432/xmo-db')
+  var sequelize = new Sequelize('postgres://xmo-user:xmo-1337_##-pass@txto.com.br:5454/xmo-db')
   sequelize.authenticate().then(() => {
       logger.info('[database] \x1b[1m\x1b[34m Sequelize connected successfully \x1b[0m')
     }).catch(err => {
