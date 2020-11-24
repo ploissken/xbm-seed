@@ -7,7 +7,7 @@ module.exports = function (app, log, db) {
 
 const doRequest = function (method, func, stringObj) {
   return new Promise((resolve, reject) => {
-    const selectFunctions = `select ${method}('${func}'::varchar, '${stringObj}'::jsonb)`
+    const selectFunctions = `select ${method}('${func}'::text, '${stringObj}'::json)`
     // const selectFunctions = `select nzl(2)`
     log.info(`querying: ${selectFunctions}`)
     db.query(selectFunctions).then(response => {
@@ -40,7 +40,7 @@ const doRequest = function (method, func, stringObj) {
 
   // crud post
   app.post('/magic/:function/', (req, res) => {
-    doRequest('db_create', req.params.function, JSON.stringify(req.query)).then(resu => {
+    doRequest('db_save', req.params.function, JSON.stringify(req.query)).then(resu => {
       res.json(resu)
     })
   })
@@ -52,5 +52,5 @@ const doRequest = function (method, func, stringObj) {
     })
   })
 
-  log.info('[routes] setup complete')
+  log.info('[crud-routes] setup complete')
 }

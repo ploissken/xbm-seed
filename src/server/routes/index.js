@@ -1,5 +1,6 @@
 module.exports = function (app, log, db) {
 require('./crud')(app, log, db)
+require('./login')(app, log, db)
 
   // hello world (:)
   app.get('/hello', (req, res) => {
@@ -91,6 +92,6 @@ require('./crud')(app, log, db)
     res.json({ status: 'error', message: '404 - not found'})
   })
 
-  log.info('[routes] setup complete')
+  log.info('[other-routes] setup complete')
 
 }
