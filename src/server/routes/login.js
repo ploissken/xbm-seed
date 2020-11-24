@@ -31,31 +31,40 @@ module.exports = function (app, log, db) {
 
   // user login
   app.post('/login/', (req, res) => {
+    if (!req.body.auth) {
+      log.info('errrrrrr: Received an authentication request without authentication parameters')
+      res.json({
+        status: 'failure',
+        message: 'no authentication provided'
+      })
+      return
+    }
     log.info('============ LOGIN STARTED ============')
     log.info(`user ${req.body.email} is trying to login`)
-
-    doLogin(req.body.email).then(reply => {
+    const auth = JSON.parse(Buffer.from(req.body.auth, 'base64').toString())
+    console.log('auth is', auth)
+    doLogin(auth.email).then(reply => {
       if (!reply.result.length) {
-        log.info(`user ${req.body.email} login failed: email not registered`)
+        log.info(`user ${auth.email} login failed: email not registered`)
         res.json({
           'status': 'failure',
-          'message': `email ${req.body.email} not registered`
+          'message': `email ${auth.email} not registered`
         })
         return
       }
       let user = reply.result[0]
       console.log('================ user', user.password)
-      bcrypt.compare(req.body.password, user.password, function(err, result) {
+      bcrypt.compare(auth.password, user.password, function(err, result) {
         // result == true
         if (result) {
-          log.info(`user ${req.body.email} login succeeded`)
+          log.info(`user ${auth.email} login succeeded`)
           delete user.password
           res.json({
             'status': 'success',
             'user': user
           })
         } else {
-          log.info(`user ${req.body.email} login failed: wrong password`)
+          log.info(`user ${auth.email} login failed: wrong password`)
           res.json({
             'status': 'failure',
             'message': 'wrong password'
