@@ -44,7 +44,7 @@ const validate = function (req, res, next) {
 
 const generate = function (user) {
   let token = jwt.sign({
-    userId: 3,
+    userId: user.id,
     validTo: dayjs().tz('America/Sao_Paulo').add(1, 'day').format()
   }, 'shhhhh')
   return {
