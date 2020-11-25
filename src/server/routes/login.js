@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt')
-const saltRounds = 10
+const tokenizer = require('../tokenizer')
 
 module.exports = function (app, log, db) {
   const doLogin = function (username) {
     return new Promise((resolve, reject) => {
       const selectFunctions = `select * from user_login where email = '${username}'`
-      // const selectFunctions = `select nzl(2)`
       log.info(`querying: ${selectFunctions}`)
       db.query(selectFunctions).then(response => {
-        // console.log(response)
         resolve({
           status: 'ok',
           query: selectFunctions,
@@ -29,7 +27,7 @@ module.exports = function (app, log, db) {
     })
   }
 
-  // user login
+  // login endpoint
   app.post('/login/', (req, res) => {
     if (!req.body.auth) {
       log.info('errrrrrr: Received an authentication request without authentication parameters')
@@ -39,10 +37,18 @@ module.exports = function (app, log, db) {
       })
       return
     }
-    log.info('============ LOGIN STARTED ============')
-    log.info(`user ${req.body.email} is trying to login`)
     const auth = JSON.parse(Buffer.from(req.body.auth, 'base64').toString())
-    console.log('auth is', auth)
+    if (!auth.email || !auth.password) {
+      log.info('errrrrrr: Received an authentication request without authentication parameters')
+      res.json({
+        status: 'failure',
+        message: 'no authentication provided'
+      })
+      return
+    }
+
+    log.info('============ LOGIN STARTED ============')
+    log.info(`user ${auth.email} is trying to login`)
     doLogin(auth.email).then(reply => {
       if (!reply.result.length) {
         log.info(`user ${auth.email} login failed: email not registered`)
@@ -53,15 +59,27 @@ module.exports = function (app, log, db) {
         return
       }
       let user = reply.result[0]
-      console.log('================ user', user.password)
-      bcrypt.compare(auth.password, user.password, function(err, result) {
-        // result == true
-        if (result) {
+      bcrypt.compare(auth.password, user.password, function(err, passwordMatch) {
+        // password match
+        if (passwordMatch) {
           log.info(`user ${auth.email} login succeeded`)
+          // generate new token
+          let tokenObj = tokenizer.generate(user)
+          // const persistTokenQuery = `insert into user_session (user_login, token, created_time, created_by) ` +
           delete user.password
-          res.json({
-            'status': 'success',
-            'user': user
+          // persist token in database
+          log.info(`querying: ${tokenObj.query}`)
+          db.query(tokenObj.query).then(response => {
+            res.json({
+              'status': 'success',
+              'user': user,
+              'token': tokenObj.token
+            })
+          }).catch(err => {
+            res.json({
+              'status': 'error',
+              'message': 'unable to persist access token'
+            })
           })
         } else {
           log.info(`user ${auth.email} login failed: wrong password`)
@@ -70,15 +88,35 @@ module.exports = function (app, log, db) {
             'message': 'wrong password'
           })
         }
+        log.info('============ LOGIN COMPLETE ============')
       })
     }).catch(err => {
-      console.log(err)
+      log.info(err)
       res.send(err)
-    }).finally (() => {
-      console.log('============ LOGIN COMPLETE ============')
-      return
     })
   })
+
+  app.post('/load-session/', (req, res) => {
+    log.info('/load-session/')
+    const userQuery = tokenizer.getUserId(req.headers.authorization)
+    db.query(userQuery).then(response => {
+      let user = response.rows[0]
+      delete user.password
+      res.json({
+        'status': 'success',
+        'user': user,
+        'token': req.headers.authorization
+      })
+      return
+    }).catch(err => {
+      log.info(err)
+      res.json({
+        'status': 'error',
+        'message': 'token expired'
+      })
+    })
+  })
+
 
   log.info('[login-routes] setup complete')
 }

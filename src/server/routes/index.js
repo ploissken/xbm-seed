@@ -1,11 +1,8 @@
+const tokenizer = require('../tokenizer')
+
 module.exports = function (app, log, db) {
 require('./crud')(app, log, db)
 require('./login')(app, log, db)
-
-  // hello world (:)
-  app.get('/hello', (req, res) => {
-    res.json({ 'message': 'Hello World!' })
-  })
 
   app.get('/table/:tableName', (req, res) => {
     console.log(req.params)
