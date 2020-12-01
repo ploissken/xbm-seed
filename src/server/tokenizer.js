@@ -8,7 +8,6 @@ dayjs.locale('pt-BR')
 dayjs.tz.setDefault("America/Sao_Paulo")
 
 const getUserId = function (tok) {
-  console.log('FUCK')
   try {
     const decoded = jwt.verify(tok, 'shhhhh')
     return `select * from user_login where id = '${decoded.userId}'`
@@ -18,7 +17,6 @@ const getUserId = function (tok) {
 }
 
 const validate = function (req, res, next) {
-  console.log('validatevalidatevalidate')
   try {
     const token = req.headers.authorization
     const decoded = jwt.verify(token, 'shhhhh')
