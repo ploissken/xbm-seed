@@ -1,8 +1,9 @@
 const tokenizer = require('../tokenizer')
 
 module.exports = function (app, log, db) {
-require('./crud')(app, log, db)
-require('./login')(app, log, db)
+  require('./login')(app, log, db)
+  app.use(tokenizer.validate)
+  require('./crud')(app, log, db)
 
   app.get('/table/:tableName', (req, res) => {
     console.log(req.params)
@@ -14,12 +15,12 @@ require('./login')(app, log, db)
   })
 
   app.get('/list-functions', (req, res) => {
-    const selectFunctions = `SELECT routines.routine_name, routines.specific_name as id,` +
-      `parameters.data_type, parameters.parameter_name, parameters.ordinal_position` +
-      `FROM information_schema.routines` +
-      `LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name` +
-      `WHERE routines.specific_schema='public'` +
-      `ORDER BY routines.routine_name, parameters.ordinal_position;`
+    const selectFunctions = `SELECT routines.routine_name, routines.specific_name as id, ` +
+      `parameters.data_type, parameters.parameter_name, parameters.ordinal_position ` +
+      `FROM information_schema.routines ` +
+      `LEFT JOIN information_schema.parameters ON routines.specific_name=parameters.specific_name ` +
+      `WHERE routines.specific_schema='public' ` +
+      `ORDER BY routines.routine_name, parameters.ordinal_position; `
     console.log('/tables', selectFunctions)
     db.query(selectFunctions).then(response => {
       res.json(response.rows)
@@ -30,7 +31,8 @@ require('./login')(app, log, db)
   })
 
   app.get('/list-tables', (req, res) => {
-    const selectTableNames = `SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema = 'public'`
+    const selectTableNames = `SELECT table_schema, table_name FROM information_schema.tables ` +
+      `WHERE table_schema = 'public'`
     console.log('/tables', selectTableNames)
     db.query(selectTableNames).then(response => {
       res.json(response.rows)
@@ -41,7 +43,8 @@ require('./login')(app, log, db)
   })
 
   app.get('/load-menu', async (req, res) => {
-    const selectTableNames = `SELECT table_schema, table_name FROM information_schema.tables WHERE table_schema = 'public' `
+    const selectTableNames = `SELECT table_schema, table_name FROM information_schema.tables ` +
+      `WHERE table_schema = 'public' `
     const selectFunctions = `SELECT routines.routine_name, routines.specific_name as id, ` +
       `parameters.data_type, parameters.parameter_name, parameters.ordinal_position ` +
       `FROM information_schema.routines ` +

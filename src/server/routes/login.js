@@ -96,7 +96,7 @@ module.exports = function (app, log, db) {
     })
   })
 
-  app.post('/load-session/', (req, res) => tokenizer.validate(req, res), (req, res) => {
+  app.post('/load-session/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     log.info('/load-session/')
     const userQuery = tokenizer.getUserId(req.headers.authorization)
     db.query(userQuery).then(response => {

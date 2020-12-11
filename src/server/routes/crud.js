@@ -1,16 +1,30 @@
+const tokenizer = require('../tokenizer')
+
+const error = {
+  PARAM_MISS: {
+    status: 'error',
+    message: 'missing parameter: function'
+  }
+}
+
 module.exports = function (app, log, db) {
 
   // requests without parameter return error
-  app.get('/magic/', (req, res) => { res.json({ status: 'error', message: 'missing parameter: function' }) })
-  app.post('/magic/', (req, res) => { res.json({ status: 'error', message: 'missing parameter: function' }) })
-  app.delete('/magic/', (req, res) => { res.json({ status: 'error', message: 'missing parameter: function' }) })
+  app.get('/magic/', (req, res, next) => tokenizer.validate(req, res, next),
+    (req, res) => { res.json(error.PARAM_MISS) })
+  app.post('/magic/', (req, res, next) => tokenizer.validate(req, res, next),
+    (req, res) => { res.json(error.PARAM_MISS) })
+  app.delete('/magic/', (req, res, next) => tokenizer.validate(req, res, next),
+    (req, res) => { res.json(error.PARAM_MISS) })
 
 const doRequest = function (method, func, stringObj) {
   return new Promise((resolve, reject) => {
     const selectFunctions = `select ${method}('${func}'::text, '${stringObj}'::json)`
     // const selectFunctions = `select nzl(2)`
-    log.info(`querying: ${selectFunctions}`)
+    log.info(`============ QUERY ============`)
+    log.info(selectFunctions)
     db.query(selectFunctions).then(response => {
+      log.info(`============ QUERY RETURNED ${ (response.rows || []).length } ROWS ============`)
       resolve({
         status: 'ok',
         query: selectFunctions,
@@ -18,7 +32,7 @@ const doRequest = function (method, func, stringObj) {
         result: response.rows
       })
     }).catch(err => {
-      log.error(`db query error captured`)
+      log.error(`============ QUERY FAILED ============`)
       log.error(err.message)
       log.error(err.hint)
       resolve({
@@ -32,21 +46,21 @@ const doRequest = function (method, func, stringObj) {
 }
 
   // crud get
-  app.get('/magic/:function/', (req, res) => {
+  app.get('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     doRequest('db_get', req.params.function, JSON.stringify(req.query)).then(resu => {
       res.json(resu)
     })
   })
 
   // crud post
-  app.post('/magic/:function/', (req, res) => {
+  app.post('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     doRequest('db_save', req.params.function, JSON.stringify(req.query)).then(resu => {
       res.json(resu)
     })
   })
 
   // crud delete
-  app.delete('/magic/:function/', (req, res) => {
+  app.delete('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     doRequest('db_remove', req.params.function, JSON.stringify(req.query)).then(resu => {
       res.json(resu)
     })
