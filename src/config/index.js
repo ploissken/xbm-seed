@@ -11,6 +11,10 @@ const API = process.env.NODE_ENV === 'production'
     'http://localhost:8080'
   ]
 
+  const secrets = {
+    sessionSecret: 'this-is-the-session-encryption-secret'
+  }
+
   const corsConf = {
     credentials: true,
     origin: ALLOWED_ORIGINS
@@ -24,6 +28,7 @@ const API = process.env.NODE_ENV === 'production'
   const config = {
     API, PORT, MODE,
     corsConf,
+    secrets,
     mailgunConf,
     cookie: {
       secret: 'here-goes-THE-secret-that-keeps-a-cookie-unique--important-stuff'
