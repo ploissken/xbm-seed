@@ -19,7 +19,7 @@ module.exports = function (app, log, db) {
 
 const doRequest = function (method, func, stringObj) {
   return new Promise((resolve, reject) => {
-    const selectFunctions = `select ${method}('${func}'::text, '${stringObj}'::json)`
+    const selectFunctions = `select ${method}('${func}'::text, '${stringObj}'::jsonb)`
     // const selectFunctions = `select nzl(2)`
     log.info(`============ QUERY ============`)
     log.info(selectFunctions)
