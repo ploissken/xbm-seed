@@ -8,7 +8,8 @@ const API = process.env.NODE_ENV === 'production'
   const ALLOWED_ORIGINS = [
     'https://xmofe.txto.com.br',
     'http://xmofe.localhost',
-    'http://localhost:8080'
+    'http://localhost:8080',
+    'http://localhost:8081'
   ]
 
   const secrets = {

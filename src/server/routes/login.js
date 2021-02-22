@@ -65,15 +65,16 @@ module.exports = function (app, log, db) {
           log.info(`user ${auth.email} login succeeded`)
           // generate new token
           let tokenObj = tokenizer.generate(user)
-          // const persistTokenQuery = `insert into user_session (user_login, token, created_time, created_by) ` +
           delete user.password
           // persist token in database
           log.info(`querying: ${tokenObj.query}`)
           db.query(tokenObj.query).then(response => {
+            // TODO: load menu
             res.json({
               'status': 'success',
               'user': user,
-              'token': tokenObj.token
+              'token': tokenObj.token,
+              'menu': [{ id: 1, name: 'um' }, { id: 2, name: 'dois' }]
             })
           }).catch(err => {
             res.json({
@@ -102,10 +103,12 @@ module.exports = function (app, log, db) {
     db.query(userQuery).then(response => {
       let user = response.rows[0]
       delete user.password
+      // TODO: load menu
       res.json({
         'status': 'success',
         'user': user,
-        'token': req.headers.authorization
+        'token': req.headers.authorization,
+        'menu': [{ id: 1, name: 'um' }, { id: 2, name: 'dois' }]
       })
       return
     }).catch(err => {
@@ -117,6 +120,7 @@ module.exports = function (app, log, db) {
     })
   })
 
+  app.post('/logout/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {})
 
   log.info('[login-routes] setup complete')
 }

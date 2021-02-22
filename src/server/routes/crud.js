@@ -47,8 +47,10 @@ const doRequest = function (method, func, stringObj) {
 
   // crud get
   app.get('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
+    console.log('GOT A GET', req.params)
     doRequest('db_get', req.params.function, JSON.stringify(req.query)).then(resu => {
-      res.json(resu)
+      console.log('resu', resu.result[0].db_get)
+      res.json(resu.result[0].db_get)
     })
   })
 
