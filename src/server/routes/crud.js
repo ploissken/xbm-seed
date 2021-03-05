@@ -34,6 +34,7 @@ const doRequest = function (method, func, stringObj) {
     }).catch(err => {
       log.error(`============ QUERY FAILED ============`)
       log.error(err.message)
+      console.log(error)
       log.error(err.hint)
       resolve({
         status: 'error',
@@ -49,14 +50,19 @@ const doRequest = function (method, func, stringObj) {
   app.get('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     console.log('GOT A GET', req.params)
     doRequest('db_get', req.params.function, JSON.stringify(req.query)).then(resu => {
-      console.log('resu', resu.result[0].db_get)
-      res.json(resu.result[0].db_get)
+      if(resu.status === 'ok') {
+        console.log('resu', resu.result[0].db_get)
+        res.json(resu.result[0].db_get)
+      } else {
+        res.json(resu)
+      }
     })
   })
 
   // crud post
   app.post('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
-    doRequest('db_save', req.params.function, JSON.stringify(req.query)).then(resu => {
+    console.log('req.body', req.body)
+    doRequest('db_post', req.params.function, JSON.stringify(req.body)).then(resu => {
       res.json(resu)
     })
   })
