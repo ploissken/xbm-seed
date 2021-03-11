@@ -33,6 +33,7 @@ const doRequest = function (method, func, stringObj) {
       })
     }).catch(err => {
       log.error(`============ QUERY FAILED ============`)
+      log.error(err)
       log.error(err.message)
       console.log(error)
       log.error(err.hint)
@@ -63,13 +64,17 @@ const doRequest = function (method, func, stringObj) {
   app.post('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
     console.log('req.body', req.body)
     doRequest('db_post', req.params.function, JSON.stringify(req.body)).then(resu => {
-      res.json(resu)
+      if (resu.status === 'ok') {
+        res.json(resu.result[0].db_post)
+      } else {
+        res.json(resu)
+      }
     })
   })
 
   // crud delete
   app.delete('/magic/:function/', (req, res, next) => tokenizer.validate(req, res, next), (req, res) => {
-    doRequest('db_remove', req.params.function, JSON.stringify(req.query)).then(resu => {
+    doRequest('db_delete', req.params.function, JSON.stringify(req.query)).then(resu => {
       res.json(resu)
     })
   })
